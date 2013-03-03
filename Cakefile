@@ -5,7 +5,8 @@ FILENAME = 'puzzlelele'
 FILES = [
     'src/main.coffee',
     'src/state.coffee',
-    'src/scene.coffee'
+    'src/scene.coffee',
+    'src/Field.coffee'
 ]
 HTMLFILE = 'index.html'
 

@@ -4,8 +4,10 @@ class MainScene extends Scene
         @stateManager = new StateManager( new ReadyState() )
 
     setup: ->
-        bear = new Sprite(64, 64)
-        bear.image = Puzzlelele.game.assets['resources/images/nebukuro.png']
-        Puzzlelele.game.rootScene.addChild(bear)
-        bear.frame = [6, 6, 7, 7];   # select sprite frame
+        #topaz = new Sprite(64, 64)
+        #topaz.image = Puzzlelele.game.assets['resources/images/topaz.png']
+        #topaz.moveTo( 64, 0 )
+        #Puzzlelele.game.rootScene.addChild(topaz)
+        @field = new Field()
+        @field.onEnter()
     update: ->

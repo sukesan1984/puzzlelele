@@ -2,7 +2,14 @@ enchant()
 class Puzzlelele extends Game
     constructor: ( width, height )->
         super width, height
-        @preload('resources/images/nebukuro.png')
+        @preload [
+            'resources/images/nebukuro.png'
+            , 'resources/images/topaz.png'
+            , 'resources/images/emerald.png'
+            , 'resources/images/ruby.png'
+            , 'resources/images/saphire.png'
+        ]
+
         @fps = 20
         root = new MainScene()
         Puzzlelele.game = @
