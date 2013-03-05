@@ -15,6 +15,7 @@ class Puzzlelele extends Game
         Puzzlelele.game = @
         @onload = ->
             root.setup()
+            @.addEventListener( 'enterframe', root.update.bind( root ) )
             @pushScene root
         @start()
 

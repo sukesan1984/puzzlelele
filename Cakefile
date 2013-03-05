@@ -6,7 +6,8 @@ FILES = [
     'src/main.coffee',
     'src/state.coffee',
     'src/scene.coffee',
-    'src/Field.coffee'
+    'src/field.coffee',
+    'src/panel.coffee'
 ]
 HTMLFILE = 'index.html'
 
