@@ -9,9 +9,10 @@ class Panel extends Sprite
         @updatePosition()
         @field    = field
         @vy       = 0
-        @aimy     = @position.getY()
+        @aimY     = @position.getY()
         @move     = 0
         @passedTime = 0
+        @fixedMoveDistance = false
         @.image   = Puzzlelele.game.assets[ @getImage( @type ) ]
         @.scale( 0.5, 0.5 )
         @removeObserver = new Publisher()
@@ -54,12 +55,18 @@ class Panel extends Sprite
     onUpdate: =>
         if ( !@move )
             return
+        if ( !@fixedMoveDistance ) #移動距離が確定するまで何もしない
+            return
         gravity = 0.98
         @vy   = gravity * @.passedTime
-        @position.setY( @y + @vy )
+        @position.setY( @position.getY() + @vy )
         @passedTime += 1
         if ( @aimY < @position.getY() )
+            #目的の位置よりも移動しすぎた時に微調整。
             @position.setY( @aimY )
+            @fixedMoveDistance = false #移動終了
+            @aimY = @position.getY() 
+            @dY = 0
             @passedTime = 0
             @move       = 0
             @field.setMoved( true )
@@ -68,7 +75,7 @@ class Panel extends Sprite
 
     setAim: ( dy )->
         @move = 1
-        @aimY = @y + dy
+        @aimY += dy
 
     addRemoveObserver: ( func )=>
         @removeObserver.subscribe( func )

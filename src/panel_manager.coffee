@@ -2,6 +2,7 @@ class PanelManager extends Array
     constructor: ->
     register: ( panel )->
         @.push panel
+        console.log( @.length )
     unregister: ( panel )->
         i = @.indexOf( panel )
         @.splice( i, 1 ) if ( i != -1 )
@@ -48,3 +49,6 @@ class PanelManager extends Array
         for panel in @
             return false if ( panel.getWillRemoved() ) #一つでも消えるものがあれば、false
         return true
+    fixMoveDistance: ->
+        for panel in @
+            panel.fixedMoveDistance = true

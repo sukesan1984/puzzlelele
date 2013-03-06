@@ -35,6 +35,7 @@ class Field
         @panelManager.register( panel )
         panel.addRemoveObserver( @onRemovePanel )
         return panel
+
     removePanels: ()->
         # markされたパネルを削除する。
         @panelManager.remove()
@@ -50,6 +51,7 @@ class Field
     onRemovePanel: ( rectangle )=>
         #@createPanel( rectangle.getPosition().getX(), -32 )
         @removeObserver.publish( rectangle )
+        @panelManager.fixMoveDistance()
 
     onTouchStart: ( e )->
         if ( !@removed )
@@ -66,3 +68,4 @@ class Field
         panel.deleteRemoveObserver( @onRemovePanel )
 
         @.parentScene.removeChild( panel )
+        #@panelManager.unregister( panel )
