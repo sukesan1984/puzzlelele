@@ -30,7 +30,8 @@ class Field
         @removeObserver.publish( rectangle )
 
     onTouchStart: ( e )->
-        console.log( e.localX + "," + e.localY )
+        if ( @moving )
+            return
         pos = new Position( e.localX, e.localY )
         @touchObserver.publish( pos )
     remove: ( panel )->

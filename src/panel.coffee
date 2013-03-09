@@ -49,8 +49,6 @@ class Panel extends Sprite
             @field.setMoving( true )
             @setAim( 32 )
     onTouchField: ( position )->
-        if ( @field.moving )
-            return
         touchPos = new Position( position.getX() - 16 , position.getY() - 16 )
         if ( @rectangle.contains( touchPos ) )
             ## このパネルがタッチされた。
