@@ -6,7 +6,8 @@ class MainScene extends Scene
     setup: ->
         @field = new Field()
         @field.onEnter()
-        @field.addFieldObserver () => 
-            console.log( "hoge" )
+        @.addEventListener 'touchstart', @onTouchStart.bind( @ )
     update: ->
         @field.onUpdate()
+    onTouchStart: ( e )->
+        @field.onTouchStart( e )

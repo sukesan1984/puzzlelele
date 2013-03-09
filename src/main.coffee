@@ -15,7 +15,16 @@ class Puzzlelele extends Game
         Puzzlelele.game = @
         @onload = ->
             root.setup()
-            @.addEventListener( 'enterframe', root.update.bind( root ) )
+
+            @panel      = new Sprite( 64, 64 )
+            @panel.image = Puzzlelele.game.assets[ 'resources/images/nebukuro.png' ]
+            @panel.moveTo( 20, 20 )
+            @.rootScene.addChild(@panel)
+
+            #@.addEventListener( 'enterframe', root.update.bind( root ) )
+            @.addEventListener 'enterframe', ->
+                @panel.x += 20
+                @panel.y += 20
             @pushScene root
         @start()
 
