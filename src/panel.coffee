@@ -1,6 +1,8 @@
 class Panel extends Sprite
     constructor: ( panelType, position, field )->
         super 64, 64
+        @WIDTH = 32
+        @HEIGHT = 32
         @type      = panelType
         @setPosition( position )
         @field    = field
@@ -11,10 +13,18 @@ class Panel extends Sprite
         @.image   = Puzzlelele.game.assets[ @getImage( @type ) ]
         @.scale( 0.5, 0.5 )
         @removeObserver = new Publisher()
+        @willRemoved = 0
     setPosition: ( position )->
         @.moveTo( position.getX(), position.getY() )
         @position = position
-        @rectangle = new Rectangle( @position, 32, 32 )
+        @rectangle = new Rectangle( @position, @WIDTH, @HEIGHT )
+    getType: ->
+        return @type
+
+    getIndex: ->
+        x = parseInt( @position.getX() / @WIDTH )
+        y = parseInt( @position.getY() / @HEIGHT )
+        return { x: x, y: y }
 
     getImage: ( panelType )->
         @PANEL_IMAGE = {
@@ -28,10 +38,10 @@ class Panel extends Sprite
     onUpdate: ->
         if ( !@move )
             return
-        gravity = 9.8
+        gravity = 0.98
         @vy   = gravity * @.passedTime
         @setPosition( new Position( @x, @y + @vy ) )
-        @passedTime += 1/10
+        @passedTime += 1
         if ( @aimY < @position.getY() )
             @setPosition( new Position( @x, @aimY ) )
             @passedTime = 0
@@ -47,7 +57,7 @@ class Panel extends Sprite
     onRemovePanel: ( rectangle )->
         if ( rectangle.isUpper( @position ) )
             @field.setMoving( true )
-            @setAim( 32 )
+            @setAim( @HEIGHT )
     onTouchField: ( position )->
         touchPos = new Position( position.getX() - 16 , position.getY() - 16 )
         if ( @rectangle.contains( touchPos ) )

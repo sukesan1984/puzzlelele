@@ -7,15 +7,20 @@ class Field
         @updateObserver = new Publisher()
         @touchObserver  = new Publisher()
         @moving         = 0
+        @checked        = 0
+        @panels         = new Array()
     setMoving: ( moving )->
         @moving = moving
     onEnter: ->
         for i in [0..@WIDTH]
             for j in [0..@HEIGHT]
-                @createPanel( 32 * i, 32 * j )
+                panel = @createPanel( 32 * i, 32 * j )
 
     onUpdate: ->
         @updateObserver.publish()
+        #if ( !@moving )
+            # 動いてないときにつながりをチェックする
+            #console.log(@getPanelMap())
     createPanel: ( x, y )->
         panelNum = parseInt( Math.random() * 5 )
         panel    = new Panel( panelNum, new Position( x, y ) , @ )
@@ -24,6 +29,8 @@ class Field
         @updateObserver.subscribe( panel.onUpdate.bind( panel ) )
         @.parentScene.addChild(panel)
         panel.addRemoveObserver( @onRemovePanel.bind( @ ) )
+        this.panels.push panel
+        return panel
 
     onRemovePanel: ( rectangle )->
         @createPanel( rectangle.getPosition().getX(), -32 )
