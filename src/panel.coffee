@@ -7,7 +7,7 @@ class Panel extends Sprite
         @.image   = Puzzlelele.game.assets[ @getImage( @type ) ]
         @.scale( 0.5, 0.5 )
         @.moveTo( position.getX(), position.getY() )
-        @removeObserver = new Array
+        @removeObserver = new Publisher()
     getImage: ( panelType )->
         @PANEL_IMAGE = {
             0: 'resources/images/nebukuro.png'
@@ -18,14 +18,8 @@ class Panel extends Sprite
         }
         return @PANEL_IMAGE[ panelType ]
     onUpdate: ->
-        # 5%で消えてそれが observerに伝わる
-        return if parseInt( Math.random() * 100 ) < 99
-        @.x += 5
-        # 確率で例えば消える
-        # 消えたときにObserverに伝える。
-        func( @.position ) for func in @removeObserver
     addRemoveObserver: ( func )->
-        @removeObserver.push func
+        @removeObserver.subscribe( func )
     onRemovePanel: ( x, y )->
     onTouchField: ( position )->
         touchPos = new Position( @position.getX() + 16, @position.getY() + 16 )

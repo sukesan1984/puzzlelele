@@ -3,35 +3,29 @@ class Field
         @.parentScene = parentScene
         @WIDTH  = 8
         @HEIGHT = 8
-        @removeObserver = new Array
-        @updateObserver = new Array
+        @removeObserver = new Publisher()
+        @updateObserver = new Publisher()
         @touchObserver  = new Publisher()
     onEnter: ->
         for i in [1..@WIDTH]
             for j in [1..@HEIGHT]
                 panelNum = parseInt( Math.random() * 5 )
                 panel    = new Panel( panelNum, new Position( 32 * i, 32 * j ) , @ )
-                @addRemoveObserver( panel.onRemovePanel.bind( panel ) )
+                @removeObserver.subscribe( panel.onRemovePanel.bind( panel ) )
                 @touchObserver.subscribe( panel.onTouchField.bind( panel ) )
-                @addUpdateObserver( panel.onUpdate.bind( panel ) )
+                @updateObserver.subscribe( panel.onUpdate.bind( panel ) )
                 @.parentScene.addChild(panel)
                 panel.addRemoveObserver( @onRemovePanel.bind( @ ) )
 
     onUpdate: ->
-        #func() for func in @updateObserver
-        #@panel.moveTo( parseInt( Math.random() * 50 ), parseInt( Math.random() * 50 ) )
-    addRemoveObserver: ( func )->
-        @removeObserver.push func
-    addUpdateObserver: ( func )->
-        @updateObserver.push func
-    #addTouchObserver: ( func )->
-        #@touchObserver.push func
-    onRemovePanel: ( x, y )->
-        func( x, y ) for func in @removeObserver
+    onRemovePanel: ( pos )->
+        @removeObserver.publish( pos )
     onTouchStart: ( e )->
         pos = new Position( e.localX, e.localY )
-        #func( pos ) for func in @touchObserver
         @touchObserver.publish( pos )
     remove: ( panel )->
         @touchObserver.unsubscribe( panel.onTouchField.bind( panel ) )
+        @removeObserver.unsubscribe( panel.onRemovePanel.bind( panel ) )
+        @updateObserver.unsubscribe( panel.onUpdate.bind( panel ) )
+
         @.parentScene.removeChild( panel )
