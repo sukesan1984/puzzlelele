@@ -1,11 +1,12 @@
 class Panel extends Sprite
-    constructor: ( panelType, position )->
+    constructor: ( panelType, position, field )->
         super 64, 64
         @type     = panelType
         @position = position
+        @field    = field
         @.image   = Puzzlelele.game.assets[ @getImage( @type ) ]
         @.scale( 0.5, 0.5 )
-        @.moveTo( position.x, position.y )
+        @.moveTo( position.getX(), position.getY() )
         @removeObserver = new Array
     getImage: ( panelType )->
         @PANEL_IMAGE = {
@@ -22,14 +23,16 @@ class Panel extends Sprite
         @.x += 5
         # 確率で例えば消える
         # 消えたときにObserverに伝える。
-        func( @position.x, @position.y ) for func in @removeObserver
+        func( @.position ) for func in @removeObserver
     addRemoveObserver: ( func )->
         @removeObserver.push func
     onRemovePanel: ( x, y )->
-    onTouchField: ( x, y )->
-        if ( @position.x <= x && @position.x + 32 > x && @position.y <= y && @position.y + 32 > y )
-            console.log( @ )
-            @.moveTo( @.x + 5, @.y + 5 )
-        else
-            @.x -= 5
-            @.y -= 5
+    onTouchField: ( position )->
+        touchPos = new Position( @position.getX() + 16, @position.getY() + 16 )
+        rectangle = new Rectangle( touchPos, 32, 32 )
+        if ( rectangle.isInside( position ) )
+            ## このパネルがタッチされた。
+            @remove()
+            func( @.poition ) for func in @removeObserver
+    remove: ->
+        @field.remove( @ )

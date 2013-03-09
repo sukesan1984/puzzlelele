@@ -4,5 +4,5 @@
 #
 guard 'shell' do
   #watch(/(.*).txt/) {|m| `tail #{m[0]}` }
-  watch(/src/) { `cake compile` }
+  watch(/src/) { `cake compile; echo done` }
 end

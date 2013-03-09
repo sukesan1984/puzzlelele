@@ -7,7 +7,11 @@ FILES = [
     'src/state.coffee',
     'src/scene.coffee',
     'src/field.coffee',
-    'src/panel.coffee'
+    'src/panel.coffee',
+    'src/position.coffee',
+    'src/rectangle.coffee',
+    'src/observer.coffee',
+
 ]
 HTMLFILE = 'index.html'
 

@@ -4,7 +4,7 @@ class MainScene extends Scene
         @stateManager = new StateManager( new ReadyState() )
 
     setup: ->
-        @field = new Field()
+        @field = new Field( @ )
         @field.onEnter()
         @.addEventListener 'touchstart', @onTouchStart.bind( @ )
     update: ->
