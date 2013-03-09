@@ -18,5 +18,4 @@ class Publisher
       switch action
         when 'publish' then subscribe(arg)
         else
-            console.log( 'unsubscribe' )
             @subscribers[pubtype].splice(i,1) if subscribe is arg

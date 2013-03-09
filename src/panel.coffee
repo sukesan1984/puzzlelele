@@ -1,13 +1,21 @@
 class Panel extends Sprite
     constructor: ( panelType, position, field )->
         super 64, 64
-        @type     = panelType
-        @position = position
+        @type      = panelType
+        @setPosition( position )
         @field    = field
+        @vy       = 0
+        @aimy     = @position.getY()
+        @move     = 0
+        @passedTime = 0
         @.image   = Puzzlelele.game.assets[ @getImage( @type ) ]
         @.scale( 0.5, 0.5 )
-        @.moveTo( position.getX(), position.getY() )
         @removeObserver = new Publisher()
+    setPosition: ( position )->
+        @.moveTo( position.getX(), position.getY() )
+        @position = position
+        @rectangle = new Rectangle( @position, 32, 32 )
+
     getImage: ( panelType )->
         @PANEL_IMAGE = {
             0: 'resources/images/nebukuro.png'
@@ -18,15 +26,31 @@ class Panel extends Sprite
         }
         return @PANEL_IMAGE[ panelType ]
     onUpdate: ->
+        if ( !@move )
+            return
+        gravity = 9.8
+        @vy   = gravity * @.passedTime
+        @setPosition( new Position( @x, @y + @vy ) )
+        @passedTime += 1/10
+        if ( @aimY < @position.getY() )
+            @setPosition( new Position( @x, @aimY ) )
+            @passedTime = 0
+            @move       = 0
+
+    setAim: ( dy )->
+        @move = 1
+        @aimY = @y + dy
+
     addRemoveObserver: ( func )->
         @removeObserver.subscribe( func )
-    onRemovePanel: ( x, y )->
+    onRemovePanel: ( rectangle )->
+        if ( rectangle.isUpper( @position ) )
+            @setAim( 32 )
     onTouchField: ( position )->
-        touchPos = new Position( @position.getX() + 16, @position.getY() + 16 )
-        rectangle = new Rectangle( touchPos, 32, 32 )
-        if ( rectangle.isInside( position ) )
+        touchPos = new Position( position.getX() - 16 , position.getY() - 16 )
+        if ( @rectangle.contains( touchPos ) )
             ## このパネルがタッチされた。
             @remove()
-            func( @.poition ) for func in @removeObserver
+            @removeObserver.publish( @rectangle )
     remove: ->
         @field.remove( @ )

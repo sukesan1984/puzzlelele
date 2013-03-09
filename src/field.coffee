@@ -7,8 +7,8 @@ class Field
         @updateObserver = new Publisher()
         @touchObserver  = new Publisher()
     onEnter: ->
-        for i in [1..@WIDTH]
-            for j in [1..@HEIGHT]
+        for i in [0..@WIDTH]
+            for j in [0..@HEIGHT]
                 panelNum = parseInt( Math.random() * 5 )
                 panel    = new Panel( panelNum, new Position( 32 * i, 32 * j ) , @ )
                 @removeObserver.subscribe( panel.onRemovePanel.bind( panel ) )
@@ -18,9 +18,11 @@ class Field
                 panel.addRemoveObserver( @onRemovePanel.bind( @ ) )
 
     onUpdate: ->
-    onRemovePanel: ( pos )->
-        @removeObserver.publish( pos )
+        @updateObserver.publish()
+    onRemovePanel: ( rectangle )->
+        @removeObserver.publish( rectangle )
     onTouchStart: ( e )->
+        console.log( e.localX + "," + e.localY )
         pos = new Position( e.localX, e.localY )
         @touchObserver.publish( pos )
     remove: ( panel )->
