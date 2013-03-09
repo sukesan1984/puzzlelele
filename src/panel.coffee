@@ -36,6 +36,7 @@ class Panel extends Sprite
             @setPosition( new Position( @x, @aimY ) )
             @passedTime = 0
             @move       = 0
+            @field.setMoving( false )
 
     setAim: ( dy )->
         @move = 1
@@ -45,8 +46,11 @@ class Panel extends Sprite
         @removeObserver.subscribe( func )
     onRemovePanel: ( rectangle )->
         if ( rectangle.isUpper( @position ) )
+            @field.setMoving( true )
             @setAim( 32 )
     onTouchField: ( position )->
+        if ( @field.moving )
+            return
         touchPos = new Position( position.getX() - 16 , position.getY() - 16 )
         if ( @rectangle.contains( touchPos ) )
             ## このパネルがタッチされた。

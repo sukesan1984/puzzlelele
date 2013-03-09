@@ -6,6 +6,9 @@ class Field
         @removeObserver = new Publisher()
         @updateObserver = new Publisher()
         @touchObserver  = new Publisher()
+        @moving         = 0
+    setMoving: ( moving )->
+        @moving = moving
     onEnter: ->
         for i in [0..@WIDTH]
             for j in [0..@HEIGHT]
