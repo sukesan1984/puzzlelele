@@ -9,18 +9,23 @@ class Field
     onEnter: ->
         for i in [0..@WIDTH]
             for j in [0..@HEIGHT]
-                panelNum = parseInt( Math.random() * 5 )
-                panel    = new Panel( panelNum, new Position( 32 * i, 32 * j ) , @ )
-                @removeObserver.subscribe( panel.onRemovePanel.bind( panel ) )
-                @touchObserver.subscribe( panel.onTouchField.bind( panel ) )
-                @updateObserver.subscribe( panel.onUpdate.bind( panel ) )
-                @.parentScene.addChild(panel)
-                panel.addRemoveObserver( @onRemovePanel.bind( @ ) )
+                @createPanel( 32 * i, 32 * j )
 
     onUpdate: ->
         @updateObserver.publish()
+    createPanel: ( x, y )->
+        panelNum = parseInt( Math.random() * 5 )
+        panel    = new Panel( panelNum, new Position( x, y ) , @ )
+        @removeObserver.subscribe( panel.onRemovePanel.bind( panel ) )
+        @touchObserver.subscribe( panel.onTouchField.bind( panel ) )
+        @updateObserver.subscribe( panel.onUpdate.bind( panel ) )
+        @.parentScene.addChild(panel)
+        panel.addRemoveObserver( @onRemovePanel.bind( @ ) )
+
     onRemovePanel: ( rectangle )->
+        @createPanel( rectangle.getPosition().getX(), -32 )
         @removeObserver.publish( rectangle )
+
     onTouchStart: ( e )->
         console.log( e.localX + "," + e.localY )
         pos = new Position( e.localX, e.localY )
