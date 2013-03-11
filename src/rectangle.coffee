@@ -6,6 +6,9 @@ class Rectangle
     # Position Classのobjectを引数にとる
     getPosition: ->
         return @position
+    setPosition: ( position )->
+        @position = position
+        return @position
     getWidth: ->
         return @_width
     getHeight: ->

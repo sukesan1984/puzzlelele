@@ -9,9 +9,9 @@ class Publisher
 
   unsubscribe: (fn, type) -> @visitSubscriers('unsubscribe', fn, type)
 
-  publish: (publication, type) -> @visitSubscriers('publish', publication, type)
+  publish: (publication, type, cb ) -> @visitSubscriers('publish', publication, type, cb )
 
-  visitSubscriers: (action, arg, type) ->
+  visitSubscriers: (action, arg, type, cb) ->
     pubtype = type or 'any'
     subscribers = @subscribers[pubtype]
     for subscribe,i in @subscribers[pubtype]
@@ -19,3 +19,4 @@ class Publisher
         when 'publish' then subscribe(arg)
         else
             @subscribers[pubtype].splice(i,1) if subscribe is arg
+    cb() if ( cb )

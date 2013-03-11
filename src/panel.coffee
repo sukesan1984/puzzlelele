@@ -4,7 +4,9 @@ class Panel extends Sprite
         @WIDTH = 32
         @HEIGHT = 32
         @type      = panelType
-        @setPosition( position )
+        @rectangle = new Rectangle( position, @WIDTH, @HEIGHT )
+        @position  = position
+        @updatePosition()
         @field    = field
         @vy       = 0
         @aimy     = @position.getY()
@@ -14,10 +16,10 @@ class Panel extends Sprite
         @.scale( 0.5, 0.5 )
         @removeObserver = new Publisher()
         @willRemoved = 0
-    setPosition: ( position )->
-        @.moveTo( position.getX(), position.getY() )
-        @position = position
-        @rectangle = new Rectangle( @position, @WIDTH, @HEIGHT )
+
+    updatePosition: ()->
+        @.moveTo( @position.getX(), @position.getY() )
+        @rectangle.setPosition( @position )
     getType: ->
         return @type
 
@@ -35,34 +37,39 @@ class Panel extends Sprite
             , 4: 'resources/images/emerald.png'
         }
         return @PANEL_IMAGE[ panelType ]
-    onUpdate: ->
+    onUpdate: =>
         if ( !@move )
             return
         gravity = 0.98
         @vy   = gravity * @.passedTime
-        @setPosition( new Position( @x, @y + @vy ) )
+        @position.setY( @y + @vy )
         @passedTime += 1
         if ( @aimY < @position.getY() )
-            @setPosition( new Position( @x, @aimY ) )
+            @position.setY( @aimY )
             @passedTime = 0
             @move       = 0
-            @field.setMoving( false )
+            @field.setMoved( true )
+
+        @updatePosition( @position )
 
     setAim: ( dy )->
         @move = 1
         @aimY = @y + dy
 
-    addRemoveObserver: ( func )->
+    addRemoveObserver: ( func )=>
         @removeObserver.subscribe( func )
-    onRemovePanel: ( rectangle )->
+    deleteRemoveObserver: ( func )=>
+        @removeObserver.unsubscribe( func )
+    onRemovePanel: ( rectangle )=>
         if ( rectangle.isUpper( @position ) )
-            @field.setMoving( true )
+            @field.setMoved( false )
             @setAim( @HEIGHT )
-    onTouchField: ( position )->
-        touchPos = new Position( position.getX() - 16 , position.getY() - 16 )
-        if ( @rectangle.contains( touchPos ) )
+    onTouchField: ( touchPosition )=>
+        if ( @rectangle.contains( touchPosition ) )
             ## このパネルがタッチされた。
-            @remove()
-            @removeObserver.publish( @rectangle )
-    remove: ->
-        @field.remove( @ )
+            @willRemoved = true
+            @field.setRemoved( false )
+    remove: =>
+        return if ( !@willRemoved ) #削除候補でなければ、何もしない。
+        @removeObserver.publish( @rectangle )
+        @field.remove( @ ) #最後に消す。
