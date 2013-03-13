@@ -8,7 +8,7 @@ class Field
         @touchObserver  = new Publisher()
         @panelManager  = new PanelManager()
         @moved          = false
-        @removed        = true
+        @removed        = false
     setMoved: ( moved )->
         @moved = moved
     setRemoved: ( removed )->
@@ -40,8 +40,12 @@ class Field
         @panelManager.remove()
     markConnectedPanels: ()->
         # 3マッチしたパネルをマークしていく。
+        # 最初につながりをリセットする。
+        @panelManager.resetConnect()
+        @panelManager.markConnect()
+
         # 3マッチしたパネルが一つもなければ、
-        @removed = true
+        @removed = @panelManager.isRemovedAll()
 
     onRemovePanel: ( rectangle )=>
         #@createPanel( rectangle.getPosition().getX(), -32 )

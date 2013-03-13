@@ -16,7 +16,7 @@ class Panel extends Sprite
         @.scale( 0.5, 0.5 )
         @removeObserver = new Publisher()
         @willRemoved = 0
-
+        @connect  = new Connect()
     updatePosition: ()->
         @.moveTo( @position.getX(), @position.getY() )
         @rectangle.setPosition( @position )
@@ -27,7 +27,21 @@ class Panel extends Sprite
         x = parseInt( @position.getX() / @WIDTH )
         y = parseInt( @position.getY() / @HEIGHT )
         return { x: x, y: y }
+    resetConnect: ->
+        @connect.reset()
+    getWillRemoved: ->
+        return @willRemoved
 
+    setConnect: ( type, direction )->
+        return false if type isnt @type
+        switch direction
+            when 'x'
+                x = @connect.addX()
+                @willRemoved = true if ( x >= 3)
+            when 'y'
+                y = @connect.addY()
+                @willRemoved = true if ( y >= 3)
+        return true
     getImage: ( panelType )->
         @PANEL_IMAGE = {
             0: 'resources/images/nebukuro.png'

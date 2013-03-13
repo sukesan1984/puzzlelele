@@ -11,7 +11,8 @@ FILES = [
     'src/position.coffee',
     'src/rectangle.coffee',
     'src/observer.coffee',
-    'src/panel_manager.coffee'
+    'src/panel_manager.coffee',
+    'src/connect.coffee'
 
 ]
 HTMLFILE = 'index.html'
