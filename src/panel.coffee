@@ -68,8 +68,8 @@ class Panel extends Sprite
             @aimY = @position.getY() 
             @dY = 0
             @passedTime = 0
-            @move       = 0
-            @field.setMoved( true )
+            @move       = false
+            @field.countDownNumMovingPanel()
 
         @updatePosition( @position )
 
@@ -83,7 +83,7 @@ class Panel extends Sprite
         @removeObserver.unsubscribe( func )
     onRemovePanel: ( rectangle )=>
         if ( rectangle.isUpper( @position ) )
-            @field.setMoved( false )
+            @field.countUpNumMovingPanel() if( !@move ) # 最初の一回だけカウントアップ
             @setAim( @HEIGHT )
     onTouchField: ( touchPosition )=>
         if ( @rectangle.contains( touchPosition ) )

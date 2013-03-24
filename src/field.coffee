@@ -7,22 +7,25 @@ class Field
         @updateObserver = new Publisher()
         @touchObserver  = new Publisher()
         @panelManager  = new PanelManager()
-        @moved          = false
+        @numMovingPanel = 0
         @removed        = false
-    setMoved: ( moved )->
-        @moved = moved
     setRemoved: ( removed )->
         @removed = removed
     onEnter: ->
         for i in [0..@WIDTH]
             for j in [0..@HEIGHT]
                 panel = @createPanel( 32 * i, 32 * j )
+    countUpNumMovingPanel: ->
+        @numMovingPanel++
+    countDownNumMovingPanel: ->
+        @numMovingPanel--
 
     onUpdate: ->
         @updateObserver.publish()
         return if ( @removed )
         @removePanels()
-        return if ( @moved )
+        console.log( @numMovingPanel )
+        return if ( @numMovingPanel ) #動いているときは何もしない。
         @markConnectedPanels()
 
     createPanel: ( x, y )->
