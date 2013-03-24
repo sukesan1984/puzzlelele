@@ -2,12 +2,11 @@ class PanelManager extends Array
     constructor: ->
     register: ( panel )->
         @.push panel
-        console.log( @.length )
     unregister: ( panel )->
         i = @.indexOf( panel )
         @.splice( i, 1 ) if ( i != -1 )
     remove: ()->
-        panel.remove() for panel in @
+        panel?.remove() for panel in @
     resetConnect: ()->
         panel.resetConnect() for panel in @
     markConnect: ()->

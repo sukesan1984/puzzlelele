@@ -63,13 +63,13 @@ class Panel extends Sprite
         @passedTime += 1
         if ( @aimY < @position.getY() )
             #目的の位置よりも移動しすぎた時に微調整。
+            @field.countDownNumMovingPanel()
             @position.setY( @aimY )
             @fixedMoveDistance = false #移動終了
-            @aimY = @position.getY() 
+            @aimY = @position.getY()
             @dY = 0
             @passedTime = 0
             @move       = false
-            @field.countDownNumMovingPanel()
 
         @updatePosition( @position )
 
@@ -92,5 +92,6 @@ class Panel extends Sprite
             @field.setRemoved( false )
     remove: =>
         return if ( !@willRemoved ) #削除候補でなければ、何もしない。
+        return if ( @field.getNumMovingPanel() ) # 動いてるなら消えないよね。
         @removeObserver.publish( @rectangle )
         @field.remove( @ ) #最後に消す。

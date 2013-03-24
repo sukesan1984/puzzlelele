@@ -15,6 +15,8 @@ class Field
         for i in [0..@WIDTH]
             for j in [0..@HEIGHT]
                 panel = @createPanel( 32 * i, 32 * j )
+    getNumMovingPanel: ->
+        return @numMovingPanel
     countUpNumMovingPanel: ->
         @numMovingPanel++
     countDownNumMovingPanel: ->
@@ -24,7 +26,6 @@ class Field
         @updateObserver.publish()
         return if ( @removed )
         @removePanels()
-        console.log( @numMovingPanel )
         return if ( @numMovingPanel ) #動いているときは何もしない。
         @markConnectedPanels()
 
@@ -71,4 +72,4 @@ class Field
         panel.deleteRemoveObserver( @onRemovePanel )
 
         @.parentScene.removeChild( panel )
-        #@panelManager.unregister( panel )
+        @panelManager.unregister( panel )
