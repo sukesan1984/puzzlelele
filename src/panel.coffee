@@ -46,10 +46,10 @@ class Panel extends Sprite
     getImage: ( panelType )->
         @PANEL_IMAGE = {
             0: 'resources/images/nebukuro.png'
-            , 1: 'resources/images/ruby.png'
-            , 2: 'resources/images/topaz.png'
-            , 3: 'resources/images/saphire.png'
-            , 4: 'resources/images/emerald.png'
+            , 1: 'resources/images/yuka.png'
+            , 2: 'resources/images/tate.png'
+            , 3: 'resources/images/ken.png'
+            , 4: 'resources/images/slime.png'
         }
         return @PANEL_IMAGE[ panelType ]
     onUpdate: =>
