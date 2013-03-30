@@ -4,7 +4,6 @@ exec = (require 'child_process').exec
 FILENAME = 'puzzlelele'
 FILES = [
     'src/main.coffee',
-    'src/state.coffee',
     'src/scene.coffee',
     'src/field.coffee',
     'src/panel.coffee',
