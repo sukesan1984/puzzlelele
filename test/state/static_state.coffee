@@ -1,5 +1,5 @@
 expect = require 'expect.js'
-StaticState = require('../src/static_state').StaticState
+StaticState = require('../../src/state/static_state').StaticState
 describe 'StaticState', ->
     staticState = new StaticState
     

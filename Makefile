@@ -1,6 +1,6 @@
 test:
-	mocha -R progress --compilers coffee:coffee-script test/*.coffee
+	mocha --recursive -R progress --compilers coffee:coffee-script test
 test-debug:
-	mocha -R -d progress --compilers coffee:coffee-script test/*.coffee
+	mocha --recursive -R -d progress --compilers coffee:coffee-script test
 
 .PHONY: test

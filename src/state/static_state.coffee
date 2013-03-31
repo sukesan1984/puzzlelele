@@ -1,6 +1,6 @@
 # ブラウザ対応で、requireが使えれば、使うというようにしておく。
 if require?
-    State = require('./state').State
+    State = require('../state').State
 
 class StaticState extends State
     onUpdate: ()->

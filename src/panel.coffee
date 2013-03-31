@@ -4,7 +4,9 @@ class Panel
         @position = position
         @state    = state
 
+        # new されたタイミングで、positionで位置を更新しておく。
         @updatePosition()
+
     updatePosition: ()->
         @sprite.x = @position.getX()
         @sprite.y = @position.getY()
