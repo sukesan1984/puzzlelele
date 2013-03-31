@@ -1,4 +1,7 @@
 class State
     constructor: ()->
     onUpdate: ()->
-exports.State = State
+if module?.exports
+    module.exports.State = State
+else
+    @State = State

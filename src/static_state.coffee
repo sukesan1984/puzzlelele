@@ -1,7 +1,12 @@
-State = require('./state').State
+# ブラウザ対応で、requireが使えれば、使うというようにしておく。
+if require?
+    State = require('./state').State
 
 class StaticState extends State
     onUpdate: ()->
-        console.log("何もしない。")
 
-exports.StaticState = StaticState
+# ブラウザ対応で、module.exportsがあれば、それにexportsするようにする。
+if module?.exports
+    module.exports.StaticState = StaticState
+else
+    @StaticState = StaticState

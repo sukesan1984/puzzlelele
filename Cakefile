@@ -11,7 +11,9 @@ FILES = [
     'src/rectangle.coffee',
     'src/observer.coffee',
     'src/panel_manager.coffee',
-    'src/connect.coffee'
+    'src/connect.coffee',
+    'src/state.coffee',
+    'src/static_state.coffee'
 
 ]
 HTMLFILE = 'index.html'
@@ -24,5 +26,5 @@ task 'compile', 'compile and minify Puzzlelele.', (options) ->
   if FILES.length is 1
     exec "coffee -c #{FILENAME}.js #{FILES[0]}", outputErr
   else
-    exec "coffee -cj #{FILENAME} #{FILES.join ' '}", outputErr 
+    exec "coffee -cj #{FILENAME} #{FILES.join ' '}", outputErr
   exec "yuicompressor #{FILENAME}.js > #{FILENAME}.min.js", outputErr

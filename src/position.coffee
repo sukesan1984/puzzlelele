@@ -12,5 +12,9 @@ class Position
     setY: ( y )->
         @_y = y
         return @_y
-exports.Position = Position
+
+if module?.exports
+    module.exports.Position = Position
+else
+    @Position = Position
 
