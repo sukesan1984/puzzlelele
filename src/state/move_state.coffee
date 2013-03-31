@@ -3,8 +3,8 @@ if require?
 
 class MoveState extends State
     constructor: ( vector, position )->
-        @vector   = vector
-        @position = position
+        @vector      = vector     # 速度ベクトル
+        @position    = position   # 現在地
 
     onUpdate: ()->
         @position.setX( @position.getX() + @vector.getX() )
