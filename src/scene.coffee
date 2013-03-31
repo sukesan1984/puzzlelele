@@ -9,7 +9,7 @@ class MainScene extends Scene
     setup: ->
         sprite       = new Sprite( 64, 64 )
         sprite.image = Puzzlelele.game.assets[ 'resources/images/nebukuro.png' ]
-        position     = new Position( 0, 0 )
+        position     = new Position( 10, 10 )
         static_state = new StaticState()
 
         panel        = new Panel( sprite, position, static_state )

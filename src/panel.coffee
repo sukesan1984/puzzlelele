@@ -3,6 +3,13 @@ class Panel
         @sprite   = sprite
         @position = position
         @state    = state
+
+        @updatePosition()
+    updatePosition: ()->
+        @sprite.x = @position.getX()
+        @sprite.y = @position.getY()
+        return @sprite
+
     appendToParent: ( parent )->
         parent.addChild( @sprite )
         return parent
