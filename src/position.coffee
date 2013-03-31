@@ -7,6 +7,12 @@ class Position
     setX: ( x )->
         @_x = x
         return @_x
+    incrementX: ( x )->
+        @_x += x
+        return @_x
+    incrementY: ( y )->
+        @_y += y
+        return @_y
     getY: ->
         return @_y
     setY: ( y )->

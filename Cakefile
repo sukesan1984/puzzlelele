@@ -12,8 +12,10 @@ FILES = [
     'src/observer.coffee',
     'src/panel_manager.coffee',
     'src/connect.coffee',
+    'src/vector.coffee',
     'src/state.coffee',
-    'src/static_state.coffee'
+    'src/state/static_state.coffee',
+    'src/state/move_state.coffee'
 
 ]
 HTMLFILE = 'index.html'

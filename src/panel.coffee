@@ -7,6 +7,11 @@ class Panel
         # new されたタイミングで、positionで位置を更新しておく。
         @updatePosition()
 
+    onUpdate: ()=>
+        @state.onUpdate()
+        @position = @state.getPosition()
+        @updatePosition()
+
     updatePosition: ()->
         @sprite.x = @position.getX()
         @sprite.y = @position.getY()

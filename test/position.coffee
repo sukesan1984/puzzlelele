@@ -19,3 +19,11 @@ describe 'Position', ->
     it 'setY', ->
         expect( position.setY( 10 ) ).to.eql( 10 )
         expect( position.getY() ).to.eql( 10 )
+
+    it 'incrementX', ->
+        expect( position.incrementX( 5 ) ).to.eql( 35 )
+        expect( position.getX() ).to.eql( 35 )
+
+    it 'incrementY', ->
+        expect( position.incrementY( 5 ) ).to.eql( 15 )
+        expect( position.getY() ).to.eql( 15 )
