@@ -12,4 +12,5 @@ class Position
     setY: ( y )->
         @_y = y
         return @_y
+exports.Position = Position
 
