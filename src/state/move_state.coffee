@@ -22,9 +22,6 @@ class MoveState extends State
         @position.setY( parseInt( @initialY + @vector.getY() * @time + 1 / 2 * @acceleration.getY() * Math.pow(@time, 2) ) )
         @countUp()
 
-    getPosition: ()->
-        return @position
-
 if module?.exports
     module.exports.MoveState = MoveState
 else

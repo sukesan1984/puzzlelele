@@ -12,7 +12,7 @@ class Panel
         @position = @state.getPosition()
         @updatePosition()
 
-    updatePosition: ()->
+    updatePosition: ()=>
         @sprite.x = @position.getX()
         @sprite.y = @position.getY()
         return @sprite
